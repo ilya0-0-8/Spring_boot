@@ -20,6 +20,10 @@ public class Product {
     @Column(name = "price")
     private int price;
 
+    @Lob
+    @Column(name = "image")
+    private byte[] image;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

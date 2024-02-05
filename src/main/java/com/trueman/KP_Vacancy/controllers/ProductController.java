@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.Multipart;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,9 +84,8 @@ public class ProductController {
     }
 
     @PostMapping("/addProducts/{id}")
-    public ResponseEntity<String> createProductUser(@RequestBody Product product, @PathVariable("id") Long id)
-    {
-        Product createdProduct = productService.createProduct(product, id);
+    public ResponseEntity<String> createProductUser(@RequestParam("name") String name, @RequestParam("description") String description, @RequestParam("price") int price, @PathVariable("id") Long id, @RequestParam MultipartFile image) throws IOException {
+        Product createdProduct = productService.createProduct(name,description, price, id, image);
         return ResponseEntity.ok("Объявление успешно создано!");
     }
 

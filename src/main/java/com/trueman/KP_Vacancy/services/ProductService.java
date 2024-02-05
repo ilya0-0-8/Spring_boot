@@ -7,7 +7,9 @@ import com.trueman.KP_Vacancy.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -36,9 +38,14 @@ public class ProductService {
         return productRepository.findById(id).orElse(null);
     }
 
-    public Product createProduct(Product product, Long id) {
+    public Product createProduct(String name, String description, int price, Long id, MultipartFile image) throws IOException {
+        Product product = new Product();
         User user = userRepository.findById(id).orElse(null);
+        product.setName(name);
+        product.setDescription(description);
+        product.setPrice(price);
         product.setUser(user);
+        product.setImage(image.getBytes());
         return productRepository.save(product);
     }
     public Product updateProduct(Long id, Product product) {
